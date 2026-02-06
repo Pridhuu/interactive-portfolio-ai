@@ -1,16 +1,6 @@
-import os
-from google import genai
-from google.genai.errors import ClientError
+from sentence_transformers import SentenceTransformer
 
-client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
 def embed(text: str):
-    try:
-        response = client.models.embed_content(
-            model="models/text-embedding-004",
-            contents=text,
-        )
-        return response.embeddings[0].values
-    except ClientError as e:
-        print(f"Error embedding text: {e}")
-        return []
+    return model.encode(text).tolist()

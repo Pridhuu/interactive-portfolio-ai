@@ -35,21 +35,6 @@ def query_db(query: str, k: int = 4):
         n_results=k
     )
 
-def reset_db():
-    """
-    Reset the ChromaDB collection.
-    """
-    try:
-        client.delete_collection("portfolio")
-    except Exception:
-        pass
-    
-    global collection
-    collection = client.get_or_create_collection(
-        name="portfolio",
-        metadata={"hnsw:space": "cosine"}
-    )
-
 
 
 # import chromadb

@@ -5,10 +5,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 
 
-def load_profile_text():
+def load_profile_text() -> list[str]:
     docs = []
-    ids = []
-    sections = []
 
     for file in DATA_DIR.iterdir():
         if file.suffix == ".json":
@@ -18,10 +16,8 @@ def load_profile_text():
                 docs.append(
                     f"Information about {section.replace('_', ' ')}:\n{to_text(content)}"
                 )
-                ids.append(f"{file.stem}_{section}")
-                sections.append(section)
 
-    return docs, ids, sections
+    return docs
 
 
 def to_text(data):
