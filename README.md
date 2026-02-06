@@ -1,4 +1,4 @@
-# interactive-portfolio-ai
+# interactive-profile-ai
 
 Sofy is a **context-aware personal AI assistant** built to represent an individual profile (Pridhu) through a conversational interface.  
 It answers questions strictly from structured data using **Retrieval-Augmented Generation (RAG)** and enforces **controlled AI behavior** via system-level prompt constraints.
