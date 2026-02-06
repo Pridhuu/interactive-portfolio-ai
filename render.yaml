@@ -8,5 +8,3 @@ services:
     envVars:
       - key: GOOGLE_API_KEY
         sync: false
-      - key: PORT
-        value: 8000
