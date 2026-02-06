@@ -1,0 +1,163 @@
+{
+  "personal_information": {
+    "name": "Pridhu"
+  },
+
+  "education": {
+    "institution": "College of Engineering, Trivandrum",
+    "degree": "B.Tech",
+    "field": "Computer Science and Engineering",
+    "duration": "2023 - 2027",
+    "gpa": 8.43
+  },
+
+  "experience": [
+    {
+      "role": "UI/UX Designer",
+      "organization": "Hoomans Project",
+      "duration": "June 2025",
+      "details": "Designed the dashboard for Promote(promote.makemypass) enabling seamless event promotion via social media templates"
+    },
+
+    {
+      "role": "Hackathon Participant",
+      "organization": "TinkerHub CET",
+      "duration": "Feb 2025",
+      "details": [
+        "Built a doctor appointment platform for users across Kerala",
+        "Implemented symptom-based preliminary health insights",
+        "Collaborated in a 3-member team",
+        "Delivered a prototype in under 24 hours",
+        "Contributed 40% to UI/UX design and ideation"
+      ]
+    }
+  ],
+
+  "projects": [
+    {
+      "title": "Kernel Module",
+      "language": "C",
+      "operating_system": "Kali Linux",
+      "duration": "Jan 2025",
+      "description": [
+        "Developed a Linux kernel module for vote validation using age-based module parameters",
+        "Achieved 100% accuracy",
+        "Validated functionality across 50+ test cases using kernel message buffer logging"
+      ]
+    },
+    {
+      "title": "Movie Matrix",
+      "language": "C",
+      "framework": "React",
+      "duration": "Dec 2025",
+      "description": [
+        "Built a production-ready React application",
+        "Used React Router and Context API",
+        "Integrated TMDB API",
+        "Implemented 3+ routed pages and 15+ reusable components",
+        "Developed 5+ core features including search, favorites, routing, API integration, and global state management",
+        "Used 2 external APIs",
+        "Ensured 100% client-side state management for scalability and smooth user interaction"
+      ]
+    },
+
+    {
+      "title": "Internet of Things",
+      "languages": ["C", "C++", "Python"],
+      "duration": "Feb 2025",
+      "description": [
+        "Developed a gesture-controlled mouse using ESP32 and MPU6050 with 90%+ accuracy",
+        "Built a real-time water and energy monitoring system",
+        "Implemented remote web-based data visualization using multiple sensors"
+      ]
+    },
+
+    {
+        "name": "Sofy - Profile AI",
+        "description": "Sofy is a profile AI that represents Pridhu, built using a conversational interface. It answers questions using context-aware AI, supports resume access, and provides a smooth chat experience powered by modern frontend and AI technologies.",
+        "type": "Profile AI",
+        "features": [
+            "Context-aware AI responses",
+            "Resume download support",
+            "Example question suggestions",
+            "Auto-scrolling chat interface",
+            "Modern UI with smooth transitions"
+        ],
+        "tech_stack": {
+            "frontend": ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+            "backend": ["FastAPI", "Python"],
+            "ai": ["Google Gemini API", "RAG", "Embeddings"]
+        }
+    }
+  ],
+
+  "positions_of_responsibility": [
+    {
+      "role": "Joint Secretary",
+      "organization": "Build Club CET",
+      "details": [
+        "Initiative under IIT Madras Research Park",
+        "Collaborated with 50+ members",
+        "Supported 8+ technical projects across domains"
+      ]
+    },
+
+    {
+      "role": "Vice Chairperson",
+      "organization": "SCORE@CET",
+      "details": [
+        "Official research club of college of engineering trivandrum",
+        "coordinating research-driven initiatives and hands-on workshops"
+      ]
+    },
+
+    {
+      "role": "Freelance UI/UX Designer",
+      "organization": "Flink",
+      "details": [
+        "Delivered end-to-end design solutions across 5+ client projects",
+        "Designed 40+ screens and user flows",
+        "Handled research, wireframing, and high-fidelity UI design",
+        "Improved usability and client satisfaction"
+      ]
+    },
+
+    {
+      "role": "Freelance UI/UX Designer",
+      "organization": "Nodify",
+      "details": [
+        "Delivered end-to-end design solutions across 2+ client projects",
+        "Designed 40+ screens and user flows",
+        "Improved usability and client satisfaction"
+      ]
+    },
+
+    {
+      "role": "Designer",
+      "organization": "RASHOMON & PROJECT OCTAGON",
+      "details": [
+        "Official college magazines of CET",
+        "Led visual design for 2 large-scale publications",
+        "Designed 100+ pages",
+        "Established typography systems, layouts, and print-ready assets"
+      ]
+    },
+
+    {
+      "role": "Head of Design",
+      "organization": "VeloCET",
+      "details": [
+        "Official Rocketry club of college of engineering trivandrum",
+        "Mentored by ISRO LPSC",
+        "Led a 3-member design team",
+        "Delivered 10+ outreach and branding assets for technical events"
+      ]
+    }
+  ],
+
+  "technical_skills": {
+    "languages": ["Python", "C", "C++", "JavaScript", "Java", "SQL"],
+    "technologies_frameworks": ["HTML5", "CSS3", "JavaScript", "React", "Next.js"],
+    "tools": ["VS Code", "Figma", "Photoshop", "Illustrator", "Framer"]
+  }
+}
