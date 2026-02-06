@@ -14,8 +14,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(router)
+@app.on_event("startup")
+async def startup_event():
+    from services.data_loader import load_profile_text
+    from rag.vectordb import add_documents, reset_db
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+    print("Ingesting data...")
+    reset_db()
+    docs, ids, sections = load_profile_text()
+    add_documents(docs, ids, sections)
+    print("Data ingestion complete.")
