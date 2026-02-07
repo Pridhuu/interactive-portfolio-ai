@@ -25,6 +25,7 @@ If you already created a Web Service and want to fix it:
     ```bash
     uvicorn main:app --host 0.0.0.0 --port $PORT
     ```
+    (Do **not** copy the \`\`\`bash part, just the text inside)
 7.  **Environment Variables:**
     - (Optional) Add `PYTHON_VERSION` with value `3.11.9`.
 8.  **Important:** Scroll up to the top right of the logs/deployment page, click **Manual Deploy** -> **Clear Build Cache & Deploy**.

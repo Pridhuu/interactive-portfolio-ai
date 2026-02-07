@@ -55,7 +55,7 @@ opentelemetry-util-http==0.50b0
 orjson==3.10.15
 overrides==7.7.0
 packaging==24.2
-posthog==3.11.2
+posthog==3.15.0
 proto-plus==1.26.0
 protobuf==5.29.3
 pyasn1==0.6.1
