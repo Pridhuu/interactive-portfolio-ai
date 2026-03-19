@@ -25,7 +25,9 @@ def add_documents(docs: list[str], ids: list[str], sections: list[str]):
 
 
 def query_db(query: str, k: int = 4):
-    """Query ChromaDB for top-k similar documents."""
+    """Query ChromaDB for top-k similar documents. Returns empty safely if not yet ingested."""
+    if collection_is_empty():
+        return {"documents": [[]], "metadatas": [[]], "distances": [[]]}
     query_embedding = embed(query)
     return collection.query(
         query_embeddings=[query_embedding],
