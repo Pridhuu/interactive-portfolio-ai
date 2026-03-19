@@ -7,4 +7,10 @@ services:
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.9
+        value: "3.11.9"
+      - key: GOOGLE_API_KEY
+        sync: false        # Set this in Render dashboard manually
+      - key: RESUME_URL
+        sync: false        # Set to your Render backend URL: https://<your-service>.onrender.com/static/Resume.pdf
+      - key: CHROMA_PERSIST_DIR
+        value: /tmp/chroma  # Writable path on Render's ephemeral filesystem

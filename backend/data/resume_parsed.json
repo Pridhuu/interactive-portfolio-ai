@@ -1,0 +1,120 @@
+{
+  "personal_information": {
+    "name": "PRIDHU RAJ RS",
+    "email": "04pridhuraj@gmail.com",
+    "phone": "+91-8075065371",
+    "location": "Kollam, Kerala",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "website": "LeetCode"
+  },
+  "education": [
+    {
+      "institution": "College of Engineering, Trivandrum",
+      "degree": "B.Tech",
+      "field": "Computer Science and Engineering",
+      "duration": "2023 - 2027",
+      "gpa": "8.43"
+    }
+  ],
+  "experience": [
+    {
+      "role": "UI/UX Designer",
+      "organization": "Promote-Hoomans Project",
+      "duration": "June 2025",
+      "details": [
+        "Designed the Promote dashboard (promote.makemypass ) as part of the Hoomans Project, enabling seamless event promotion via social media templates, while improving usability by reducing navigation steps by 30% and increasing user engagement by 45%."
+      ]
+    },
+    {
+      "role": "Hackathon Participant",
+      "organization": "TinkerHub CET",
+      "duration": "Feb 2025",
+      "details": [
+        "Built a doctor appointment platform for users across Kerala with symptom-based preliminary health insights, collaborating in a 3-member team to deliver a prototype in under 24 hours with 40% contribution to UI/UX design and ideation."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Kernel Module",
+      "description": [
+        "Developed a Linux kernel module for vote validation using age-based module parameters, achieving 100% accuracy and validating functionality across 50+ test cases through kernel message buffer logging."
+      ],
+      "language": "C",
+      "technologies": "Kali Linux",
+      "duration": "Jan 2025"
+    },
+    {
+      "title": "Movie Matrix",
+      "description": [
+        "Built a production-ready React application using React Router, Context API, and TMDB API, featuring 3+ routed pages, 15+ reusable components, 5+ core features (search, favorites, routing, API integration, global state), 2 external APIs, and 100% client-side state management, resulting in a scalable architecture and smoother user interaction flow."
+      ],
+      "language": "C",
+      "technologies": "React",
+      "duration": "Dec 2025"
+    },
+    {
+      "title": "Internet of Things",
+      "description": [
+        "Implemented embedded and IoT systems including a gesture-controlled mouse (ESP32 + MPU6050, 90%+ accuracy) and a real-time water and energy monitoring platform with remote web-based data visualization using multiple sensors."
+      ],
+      "language": "C/C++",
+      "technologies": "Python",
+      "duration": "Feb 2025"
+    }
+  ],
+  "positions_of_responsibility": [
+    {
+      "role": "Joint Secretary",
+      "organization": "Build Club CET (IIT Madras Research Park initiative) and SCORE@CET",
+      "details": [
+        "coordinating research-driven initiatives and hands-on workshops, collaborating with 50+ members, and supporting 8+ technical projects across domains."
+      ]
+    },
+    {
+      "role": "Freelance UI/UX Designer",
+      "organization": "Flink and Nodify",
+      "details": [
+        "delivering end-to-end design solutions across 5+ client projects, designing 40+ screens and user flows through research, wireframing, and high-fidelity UI, resulting in improved usability and client satisfaction."
+      ]
+    },
+    {
+      "role": "Designer",
+      "organization": "RASHOMON (Official College Magazine, 2023-24) and PROJECT OCTAGON (First Technical Magazine of CET)",
+      "details": [
+        "leading visual design for 2 large-scale publications with 100+ pages, establishing typography systems, layouts, and print-ready assets."
+      ]
+    },
+    {
+      "role": "Head of Design",
+      "organization": "VeloCET, the official Rocketry Club of CET mentored by ISRO LPSC",
+      "details": [
+        "leading a 3 member design team to deliver 10+ outreach and branding assets for technical events."
+      ]
+    }
+  ],
+  "technical_skills": {
+    "languages": [
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "Java",
+      "SQL"
+    ],
+    "technologies_frameworks": [
+      "HTML5",
+      "CSS3",
+      "Javascript",
+      "React"
+    ],
+    "tools": [
+      "VS Code",
+      "Figma",
+      "Photoshop",
+      "Illustrator"
+    ]
+  },
+  "certifications": [],
+  "achievements": []
+}
