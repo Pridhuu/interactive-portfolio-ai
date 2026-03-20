@@ -28,10 +28,9 @@ yarn-error.log*
 ####################################
 # AI / Vector Databases
 ####################################
-chroma/
-chromadb/
-*.sqlite
-*.db
+# Only ignore chroma at the repo root — backend/chroma/ is committed intentionally
+/chroma/
+/chromadb/
 *.index
 
 ####################################

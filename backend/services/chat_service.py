@@ -4,15 +4,15 @@ from google import genai
 from google.genai.errors import ClientError
 
 from config import RESUME_URL
+from rag.retriever import retrieve_context
 
 client = genai.Client()
 MODEL_NAME = "models/gemini-flash-latest"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROMPT_FILE = BASE_DIR / "prompts" / "system_prompt.txt"
-DATA_DIR = BASE_DIR / "data"
 
-# ── Prompt cache (re-read only if file changes) ──────────────────────────────
+# ── Prompt cache: re-read only when file changes ─────────────────────────────
 _prompt_cache: str = ""
 _prompt_mtime: float = 0.0
 
@@ -25,36 +25,6 @@ def get_system_prompt() -> str:
     return _prompt_cache
 
 
-# ── Data cache (load all JSON files once, reload if any change) ───────────────
-_data_cache: str = ""
-_data_mtime: float = 0.0
-
-def get_portfolio_data() -> str:
-    """Load and cache all JSON files from the data/ directory."""
-    global _data_cache, _data_mtime
-
-    json_files = sorted(DATA_DIR.glob("*.json"))
-    if not json_files:
-        return "No portfolio data available."
-
-    # Use the most recent modification time across all files
-    latest_mtime = max(f.stat().st_mtime for f in json_files)
-    if latest_mtime == _data_mtime and _data_cache:
-        return _data_cache
-
-    sections = []
-    for f in json_files:
-        try:
-            data = json.loads(f.read_text(encoding="utf-8"))
-            sections.append(f"=== {f.stem.upper()} ===\n{json.dumps(data, indent=2)}")
-        except Exception as e:
-            sections.append(f"=== {f.stem.upper()} ===\n[Error loading: {e}]")
-
-    _data_cache = "\n\n".join(sections)
-    _data_mtime = latest_mtime
-    return _data_cache
-
-
 # ── Streaming chat ────────────────────────────────────────────────────────────
 def stream_chat(user_message: str):
     """
@@ -64,10 +34,14 @@ def stream_chat(user_message: str):
       data: {"error": "..."}\n\n
     """
     try:
+        context = retrieve_context(user_message, k=4)
+        if not context.strip():
+            context = "No relevant information found in portfolio data."
+
         prompt = f"""{get_system_prompt()}
 
-=== PRIDHU'S COMPLETE PORTFOLIO DATA ===
-{get_portfolio_data()}
+=== RELEVANT PORTFOLIO CONTEXT ===
+{context}
 
 === USER QUESTION ===
 {user_message}
