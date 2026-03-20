@@ -176,7 +176,7 @@ export default function ChatBox() {
                     {/* Messages */}
                     {hasMessages && (
                         <div className="w-full h-160 flex flex-col">
-                            <div className="w-full h-[calc(100vh-220px)] md:h-85 max-w-3xl fixed bottom-40 md:bottom-60 overflow-y-auto text-sm chat-scroll pr-4">
+                            <div className="w-full max-w-3xl fixed top-20 md:top-28 bottom-40 md:bottom-60 overflow-y-auto text-sm chat-scroll pr-4">
                                 {messages.map((m, i) => (
                                     <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                                         <div className="max-w-[85%] md:max-w-[75%] px-4 py-3 rounded-2xl space-y-2">

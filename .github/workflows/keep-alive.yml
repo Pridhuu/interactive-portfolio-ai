@@ -1,0 +1,22 @@
+name: Keep Backend Alive
+
+on:
+  schedule:
+    # Runs every 12 minutes to prevent Render free tier cold starts (spin-down after 15 min)
+    - cron: "*/12 * * * *"
+  workflow_dispatch: # allow manual trigger from GitHub UI
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend health endpoint
+        run: |
+          echo "Pinging backend at $(date)"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://new-interactive-portfolio-ai.onrender.com/health)
+          echo "Response status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "⚠️ Backend returned $STATUS"
+          else
+            echo "✅ Backend is alive"
+          fi
