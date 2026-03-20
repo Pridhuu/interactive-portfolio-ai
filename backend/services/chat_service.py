@@ -1,23 +1,22 @@
 import json
+from pathlib import Path
 from google import genai
 from google.genai.errors import ClientError
-from pathlib import Path
 
 from config import RESUME_URL
-from rag.retriever import retrieve_context
 
 client = genai.Client()
 MODEL_NAME = "models/gemini-flash-latest"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROMPT_FILE = BASE_DIR / "prompts" / "system_prompt.txt"
+DATA_DIR = BASE_DIR / "data"
 
-# Cache prompt + mtime to avoid disk read every request
+# ── Prompt cache (re-read only if file changes) ──────────────────────────────
 _prompt_cache: str = ""
 _prompt_mtime: float = 0.0
 
 def get_system_prompt() -> str:
-    """Return cached prompt; re-read from disk only if the file changed."""
     global _prompt_cache, _prompt_mtime
     mtime = PROMPT_FILE.stat().st_mtime
     if mtime != _prompt_mtime:
@@ -26,30 +25,54 @@ def get_system_prompt() -> str:
     return _prompt_cache
 
 
-def _build_prompt(user_message: str) -> str:
-    context = retrieve_context(user_message, k=3)
-    if not context.strip():
-        context = "No relevant information found."
-    return f"""{get_system_prompt()}
+# ── Data cache (load all JSON files once, reload if any change) ───────────────
+_data_cache: str = ""
+_data_mtime: float = 0.0
 
-Context (authoritative information about Pridhu):
-{context}
+def get_portfolio_data() -> str:
+    """Load and cache all JSON files from the data/ directory."""
+    global _data_cache, _data_mtime
 
-User question:
+    json_files = sorted(DATA_DIR.glob("*.json"))
+    if not json_files:
+        return "No portfolio data available."
+
+    # Use the most recent modification time across all files
+    latest_mtime = max(f.stat().st_mtime for f in json_files)
+    if latest_mtime == _data_mtime and _data_cache:
+        return _data_cache
+
+    sections = []
+    for f in json_files:
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+            sections.append(f"=== {f.stem.upper()} ===\n{json.dumps(data, indent=2)}")
+        except Exception as e:
+            sections.append(f"=== {f.stem.upper()} ===\n[Error loading: {e}]")
+
+    _data_cache = "\n\n".join(sections)
+    _data_mtime = latest_mtime
+    return _data_cache
+
+
+# ── Streaming chat ────────────────────────────────────────────────────────────
+def stream_chat(user_message: str):
+    """
+    Yield SSE-formatted chunks:
+      data: {"token": "..."}\n\n
+      data: {"done": true, "resume_url": "..."|null}\n\n
+      data: {"error": "..."}\n\n
+    """
+    try:
+        prompt = f"""{get_system_prompt()}
+
+=== PRIDHU'S COMPLETE PORTFOLIO DATA ===
+{get_portfolio_data()}
+
+=== USER QUESTION ===
 {user_message}
 """
 
-
-def stream_chat(user_message: str):
-    """
-    Generator that yields SSE-formatted chunks.
-
-    Each chunk: data: {{"token": "..."}}\n\n
-    Final chunk: data: {{"done": true, "resume_url": "..."|null}}\n\n
-    Error chunk: data: {{"error": "..."}}\n\n
-    """
-    try:
-        prompt = _build_prompt(user_message)
         asked_for_resume = any(
             kw in user_message.lower()
             for kw in ["resume", "cv", "download"]
@@ -64,16 +87,13 @@ def stream_chat(user_message: str):
             token = chunk.text or ""
             if token:
                 full_reply += token
-                # Stream token to client (skip [RESUME_DOWNLOAD] placeholder)
                 clean_token = token.replace("[RESUME_DOWNLOAD]", "")
                 if clean_token:
                     yield f"data: {json.dumps({'token': clean_token})}\n\n"
 
-        # Determine resume URL after full reply is assembled
+        resume_url = None
         if asked_for_resume and "[RESUME_DOWNLOAD]" in full_reply:
             resume_url = RESUME_URL
-        else:
-            resume_url = None
 
         yield f"data: {json.dumps({'done': True, 'resume_url': resume_url})}\n\n"
 
@@ -81,7 +101,7 @@ def stream_chat(user_message: str):
         if "RESOURCE_EXHAUSTED" in str(e):
             msg = "I'm getting too many requests right now. Please try again in a few seconds."
         else:
-            msg = f"An error occurred: {str(e)}"
+            msg = f"An error occurred: {e}"
         yield f"data: {json.dumps({'error': msg})}\n\n"
 
     except Exception as e:

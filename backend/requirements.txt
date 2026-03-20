@@ -6,12 +6,3 @@ aiofiles
 
 # Google Gemini
 google-genai>=1.5.0
-
-# Vector DB
-chromadb
-
-# Embeddings
-sentence-transformers
-
-# PDF parsing
-pymupdf
