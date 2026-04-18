@@ -1,8 +1,8 @@
 {
   "personal_information": {
-    "name": "PRIDHU RAJ RS",
+    "name": "Pridhu Raj R S",
     "email": "04pridhuraj@gmail.com",
-    "phone": "+91-8075065371",
+    "phone": "+91 8075 065 371",
     "location": "Kollam, Kerala",
     "linkedin": "LinkedIn",
     "github": "GitHub",
@@ -13,8 +13,8 @@
       "institution": "College of Engineering, Trivandrum",
       "degree": "B.Tech",
       "field": "Computer Science and Engineering",
-      "duration": "2023 - 2027",
-      "gpa": "8.43"
+      "duration": "2023 \u2013 2027",
+      "gpa": "8.10"
     }
   ],
   "experience": [
@@ -23,74 +23,59 @@
       "organization": "Promote-Hoomans Project",
       "duration": "June 2025",
       "details": [
-        "Designed the Promote dashboard (promote.makemypass ) as part of the Hoomans Project, enabling seamless event promotion via social media templates, while improving usability by reducing navigation steps by 30% and increasing user engagement by 45%."
-      ]
-    },
-    {
-      "role": "Hackathon Participant",
-      "organization": "TinkerHub CET",
-      "duration": "Feb 2025",
-      "details": [
-        "Built a doctor appointment platform for users across Kerala with symptom-based preliminary health insights, collaborating in a 3-member team to deliver a prototype in under 24 hours with 40% contribution to UI/UX design and ideation."
+        "Designed the Promote dashboard (promote.makemypass.com) as part of the Hoomans Project, enabling seamless event promotion via social media templates, while improving usability by reducing navigation steps by 30% and increasing user engagement by 45%."
       ]
     }
   ],
   "projects": [
     {
-      "title": "Kernel Module",
+      "title": "Interactive Portfolio AI \u2013 Sofy",
       "description": [
-        "Developed a Linux kernel module for vote validation using age-based module parameters, achieving 100% accuracy and validating functionality across 50+ test cases through kernel message buffer logging."
+        "Developed an AI-powered portfolio application leveraging RAG (Retrieval-Augmented Generation) with Gemini and ChromaDB, enabling real-time conversational interaction with 5+ core features including semantic search, contextual Q&A, streaming responses (SSE), vector retrieval, and API integration, resulting in accurate, personalized, and non-hallucinated responses.",
+        "Implemented a scalable full-stack architecture using Next.js frontend and FastAPI backend with 2+ integrated services (Gemini API, ChromaDB), achieving efficient context retrieval, optimized response generation, and seamless user experience deployed via Vercel and Render."
       ],
-      "language": "C",
-      "technologies": "Kali Linux",
-      "duration": "Jan 2025"
-    },
-    {
-      "title": "Movie Matrix",
-      "description": [
-        "Built a production-ready React application using React Router, Context API, and TMDB API, featuring 3+ routed pages, 15+ reusable components, 5+ core features (search, favorites, routing, API integration, global state), 2 external APIs, and 100% client-side state management, resulting in a scalable architecture and smoother user interaction flow."
-      ],
-      "language": "C",
-      "technologies": "React",
-      "duration": "Dec 2025"
+      "language": null,
+      "technologies": "Next.js, FastAPI",
+      "duration": "Mar 2026"
     },
     {
       "title": "Internet of Things",
       "description": [
-        "Implemented embedded and IoT systems including a gesture-controlled mouse (ESP32 + MPU6050, 90%+ accuracy) and a real-time water and energy monitoring platform with remote web-based data visualization using multiple sensors."
+        "Developed a gesture-controlled mouse for PC using ESP32 and MPU6050 sensor, achieving 90%+ accuracy in motion-to-pointer translation.",
+        "Implemented a real-time water and energy monitoring system using YF-S201 flow sensor, ACS712 current sensor, ZMPT101B voltage sensor, and ESP32, enabling remote tracking of water flow rate, energy consumption, and electrical parameters via a web-based IoT platform."
       ],
-      "language": "C/C++",
-      "technologies": "Python",
+      "language": "C/C++, Python",
+      "technologies": null,
       "duration": "Feb 2025"
     }
   ],
   "positions_of_responsibility": [
     {
-      "role": "Joint Secretary",
-      "organization": "Build Club CET (IIT Madras Research Park initiative) and SCORE@CET",
+      "role": "Vice Chairperson",
+      "organization": "SCORE@CET",
       "details": [
-        "coordinating research-driven initiatives and hands-on workshops, collaborating with 50+ members, and supporting 8+ technical projects across domains."
+        "Coordinating research-driven initiatives and hands-on workshops, collaborating with 50+ members."
+      ]
+    },
+    {
+      "role": "Joint Secretary",
+      "organization": "Build Club CET",
+      "details": [
+        "Supporting 8+ technical projects across domains."
       ]
     },
     {
       "role": "Freelance UI/UX Designer",
       "organization": "Flink and Nodify",
       "details": [
-        "delivering end-to-end design solutions across 5+ client projects, designing 40+ screens and user flows through research, wireframing, and high-fidelity UI, resulting in improved usability and client satisfaction."
+        "Delivering end-to-end design solutions across 5+ client projects, designing 40+ screens and user flows through research, wireframing, and high-fidelity UI, resulting in improved usability and client satisfaction."
       ]
     },
     {
       "role": "Designer",
-      "organization": "RASHOMON (Official College Magazine, 2023-24) and PROJECT OCTAGON (First Technical Magazine of CET)",
+      "organization": "RASHOMON (Official College Magazine, 2023\u201324) and PROJECT OCTAGON (First Technical Magazine of CET)",
       "details": [
-        "leading visual design for 2 large-scale publications with 100+ pages, establishing typography systems, layouts, and print-ready assets."
-      ]
-    },
-    {
-      "role": "Head of Design",
-      "organization": "VeloCET, the official Rocketry Club of CET mentored by ISRO LPSC",
-      "details": [
-        "leading a 3 member design team to deliver 10+ outreach and branding assets for technical events."
+        "Leading visual design for 2 large-scale publications with 100+ pages, establishing typography systems, layouts, and print-ready assets."
       ]
     }
   ],
@@ -114,7 +99,5 @@
       "Photoshop",
       "Illustrator"
     ]
-  },
-  "certifications": [],
-  "achievements": []
+  }
 }

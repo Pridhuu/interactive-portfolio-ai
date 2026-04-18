@@ -8,21 +8,21 @@ def ingest_if_needed():
     This prevents re-ingesting on every restart when the DB is already populated.
     """
     if not collection_is_empty():
-        print("✅ Vector DB already populated. Skipping ingestion.")
+        print("[OK] Vector DB already populated. Skipping ingestion.")
         return
 
-    print("🔄 Vector DB is empty. Starting ingestion...")
+    print("[INGEST] Vector DB is empty. Starting ingestion...")
     docs = load_profile_text()
 
     if not docs:
-        print("⚠️  No documents found to ingest. Check data/ directory.")
+        print("[WARN] No documents found to ingest. Check data/ directory.")
         return
 
     ids = [f"doc_{i}" for i in range(len(docs))]
     sections = ["profile"] * len(docs)
 
     add_documents(docs, ids, sections)
-    print(f"✅ Ingested {len(docs)} documents into vector DB.")
+    print(f"[OK] Ingested {len(docs)} documents into vector DB.")
 
 
 def ingest():
@@ -31,21 +31,21 @@ def ingest():
     ids = [f"doc_{i}" for i in range(len(docs))]
     sections = ["profile"] * len(docs)
     add_documents(docs, ids, sections)
-    print(f"✅ Force-ingested {len(docs)} documents.")
+    print(f"[OK] Force-ingested {len(docs)} documents.")
 
 
 def force_reingest():
     """Wipe ChromaDB and re-ingest. Called when Resume.pdf changes."""
-    print("🗑️  Clearing stale ChromaDB collection for re-ingestion...")
+    print("[DEL] Clearing stale ChromaDB collection for re-ingestion...")
     clear_collection()
     docs = load_profile_text()
     if not docs:
-        print("⚠️  No documents found to ingest. Check data/ directory.")
+        print("[WARN] No documents found to ingest. Check data/ directory.")
         return
     ids = [f"doc_{i}" for i in range(len(docs))]
     sections = ["profile"] * len(docs)
     add_documents(docs, ids, sections)
-    print(f"✅ Re-ingested {len(docs)} documents into ChromaDB.")
+    print(f"[OK] Re-ingested {len(docs)} documents into ChromaDB.")
 
 
 if __name__ == "__main__":

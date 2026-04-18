@@ -28,9 +28,9 @@ def clear_collection():
     existing = col.get()
     if existing["ids"]:
         col.delete(ids=existing["ids"])
-        print(f"🗑️  Cleared {len(existing['ids'])} documents from ChromaDB.")
+        print(f"[DEL] Cleared {len(existing['ids'])} documents from ChromaDB.")
     else:
-        print("ℹ️  ChromaDB collection was already empty.")
+        print("[INFO] ChromaDB collection was already empty.")
 
 
 def add_documents(docs: list[str], ids: list[str], sections: list[str]):

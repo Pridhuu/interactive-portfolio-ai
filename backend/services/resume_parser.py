@@ -35,7 +35,7 @@ def _parse_pdf_with_gemini() -> dict:
     """Upload the resume PDF to Gemini and extract structured JSON."""
     client = genai.Client()
 
-    print("📄 Uploading Resume.pdf to Gemini for one-time parsing...")
+    print("[PDF] Uploading Resume.pdf to Gemini for one-time parsing...")
 
     with open(RESUME_PDF, "rb") as f:
         uploaded = client.files.upload(
@@ -96,7 +96,7 @@ Rules:
     try:
         return json.loads(raw)
     except json.JSONDecodeError as e:
-        print(f"⚠️  Gemini returned invalid JSON: {e}")
+        print(f"[WARN] Gemini returned invalid JSON: {e}")
         print("Raw output (first 500 chars):", raw[:500])
         raise
 
@@ -134,18 +134,18 @@ def ensure_resume_json_exists() -> bool:
     Returns True if a fresh parse was performed (caller should re-ingest ChromaDB).
     """
     if not RESUME_PDF.exists():
-        print("⚠️  No Resume.pdf found in static/. Skipping PDF parsing.")
+        print("[WARN] No Resume.pdf found in static/. Skipping PDF parsing.")
         return False
 
     if PARSED_JSON.exists() and not _pdf_has_changed():
-        print("✅ resume_parsed.json is up-to-date (PDF unchanged). Skipping re-parse.")
+        print("[OK] resume_parsed.json is up-to-date (PDF unchanged). Skipping re-parse.")
         return False
 
     if PARSED_JSON.exists():
-        print("🔄 Resume.pdf has changed — deleting stale cache and re-parsing...")
+        print("[UPDATE] Resume.pdf has changed -- deleting stale cache and re-parsing...")
         PARSED_JSON.unlink()
     else:
-        print("🔄 resume_parsed.json not found. Parsing PDF with Gemini (one-time)...")
+        print("[PARSE] resume_parsed.json not found. Parsing PDF with Gemini (one-time)...")
 
     try:
         data = _parse_pdf_with_gemini()
@@ -154,9 +154,9 @@ def ensure_resume_json_exists() -> bool:
         with open(PARSED_JSON, "w", encoding="utf-8") as f:
             f.write(json_str)
         _save_pdf_hash()  # Update hash ONLY after successful parse
-        print(f"✅ Parsed resume saved to {PARSED_JSON.name}")
+        print(f"[OK] Parsed resume saved to {PARSED_JSON.name}")
         return True  # Signal: ChromaDB needs re-ingest
     except Exception as e:
-        print(f"❌ Failed to parse resume PDF: {e}")
+        print(f"[ERR] Failed to parse resume PDF: {e}")
         print("   Chat will continue using profile.json only.")
         return False
