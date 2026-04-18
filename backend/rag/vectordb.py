@@ -22,6 +22,17 @@ def collection_is_empty() -> bool:
     return _get_collection().count() == 0
 
 
+def clear_collection():
+    """Delete all documents from the ChromaDB collection (for forced re-ingest)."""
+    col = _get_collection()
+    existing = col.get()
+    if existing["ids"]:
+        col.delete(ids=existing["ids"])
+        print(f"🗑️  Cleared {len(existing['ids'])} documents from ChromaDB.")
+    else:
+        print("ℹ️  ChromaDB collection was already empty.")
+
+
 def add_documents(docs: list[str], ids: list[str], sections: list[str]):
     """Add documents to ChromaDB with embeddings and metadata."""
     _get_collection().add(

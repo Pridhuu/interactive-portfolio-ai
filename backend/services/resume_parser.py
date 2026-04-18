@@ -4,13 +4,14 @@ resume_parser.py
 Parses resume.pdf ONCE using Gemini and saves the result to data/resume_parsed.json.
 
 Rules:
-- If data/resume_parsed.json already exists  → skip entirely, use the JSON.
-- If data/resume_parsed.json does NOT exist  → call Gemini, parse PDF, write JSON.
+- If data/resume_parsed.json already exists AND the PDF hash matches → skip (use cache).
+- If PDF hash has changed (or JSON missing) → re-parse PDF with Gemini, update cache.
 
-To force a re-parse (e.g. after uploading a new resume):
-  delete data/resume_parsed.json and restart the server.
+The PDF hash is stored in data/resume_pdf.hash so changes are detected automatically
+on every restart without needing manual file deletion.
 """
 
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -25,8 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "static"
 DATA_DIR   = BASE_DIR / "data"
 
-RESUME_PDF  = STATIC_DIR / "Resume.pdf"
-PARSED_JSON = DATA_DIR / "resume_parsed.json"
+RESUME_PDF   = STATIC_DIR / "Resume.pdf"
+PARSED_JSON  = DATA_DIR   / "resume_parsed.json"
+PDF_HASH_FILE = DATA_DIR  / "resume_pdf.hash"
 
 
 def _parse_pdf_with_gemini() -> dict:
@@ -99,30 +101,62 @@ Rules:
         raise
 
 
-def ensure_resume_json_exists():
+def _get_pdf_hash() -> str:
+    """Compute the MD5 hash of the current Resume.pdf."""
+    h = hashlib.md5()
+    with open(RESUME_PDF, "rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _pdf_has_changed() -> bool:
+    """Return True if Resume.pdf is new or differs from the stored hash."""
+    if not PDF_HASH_FILE.exists():
+        return True  # No hash stored yet → treat as changed
+    return PDF_HASH_FILE.read_text().strip() != _get_pdf_hash()
+
+
+def _save_pdf_hash():
+    """Persist the current Resume.pdf hash for future change detection."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    PDF_HASH_FILE.write_text(_get_pdf_hash())
+
+
+def ensure_resume_json_exists() -> bool:
     """
     Called once at backend startup.
 
-    - If resume_parsed.json already exists → skip (use the cached JSON).
-    - If it doesn't exist and Resume.pdf is present → parse PDF, write JSON.
-    - If neither exists → warn and continue (profile.json will still be used).
-    """
-    if PARSED_JSON.exists():
-        print("✅ resume_parsed.json already exists. Skipping PDF parsing.")
-        return
+    - If resume_parsed.json exists AND PDF hash unchanged → skip (use cache).
+    - If PDF has changed (or JSON missing) → re-parse, update cache + hash.
+    - If no Resume.pdf found → warn and continue (profile.json will still be used).
 
+    Returns True if a fresh parse was performed (caller should re-ingest ChromaDB).
+    """
     if not RESUME_PDF.exists():
         print("⚠️  No Resume.pdf found in static/. Skipping PDF parsing.")
-        return
+        return False
 
-    print("🔄 resume_parsed.json not found. Parsing PDF with Gemini (one-time)...")
+    if PARSED_JSON.exists() and not _pdf_has_changed():
+        print("✅ resume_parsed.json is up-to-date (PDF unchanged). Skipping re-parse.")
+        return False
+
+    if PARSED_JSON.exists():
+        print("🔄 Resume.pdf has changed — deleting stale cache and re-parsing...")
+        PARSED_JSON.unlink()
+    else:
+        print("🔄 resume_parsed.json not found. Parsing PDF with Gemini (one-time)...")
+
     try:
         data = _parse_pdf_with_gemini()
         DATA_DIR.mkdir(parents=True, exist_ok=True)
         json_str = json.dumps(data, indent=2, ensure_ascii=True)  # ASCII-safe for Windows cp1252
         with open(PARSED_JSON, "w", encoding="utf-8") as f:
             f.write(json_str)
-        print(f"Parsed resume saved to {PARSED_JSON.name}")
+        _save_pdf_hash()  # Update hash ONLY after successful parse
+        print(f"✅ Parsed resume saved to {PARSED_JSON.name}")
+        return True  # Signal: ChromaDB needs re-ingest
     except Exception as e:
         print(f"❌ Failed to parse resume PDF: {e}")
         print("   Chat will continue using profile.json only.")
+        return False

@@ -1,5 +1,5 @@
 from services.data_loader import load_profile_text
-from rag.vectordb import add_documents, collection_is_empty
+from rag.vectordb import add_documents, collection_is_empty, clear_collection
 
 
 def ingest_if_needed():
@@ -32,6 +32,20 @@ def ingest():
     sections = ["profile"] * len(docs)
     add_documents(docs, ids, sections)
     print(f"✅ Force-ingested {len(docs)} documents.")
+
+
+def force_reingest():
+    """Wipe ChromaDB and re-ingest. Called when Resume.pdf changes."""
+    print("🗑️  Clearing stale ChromaDB collection for re-ingestion...")
+    clear_collection()
+    docs = load_profile_text()
+    if not docs:
+        print("⚠️  No documents found to ingest. Check data/ directory.")
+        return
+    ids = [f"doc_{i}" for i in range(len(docs))]
+    sections = ["profile"] * len(docs)
+    add_documents(docs, ids, sections)
+    print(f"✅ Re-ingested {len(docs)} documents into ChromaDB.")
 
 
 if __name__ == "__main__":
